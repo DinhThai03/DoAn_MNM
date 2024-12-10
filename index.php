@@ -1,5 +1,6 @@
 <?php
 include "./connect/connect.php";
+include "./connect/sanphamconn.php";
 
 ?>`
 
