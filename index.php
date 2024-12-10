@@ -44,6 +44,16 @@ $dssp = getallsp();
         }
         include "./view/home.php";
         break;
+        case 'detail':
+          if (isset($_GET['id']) && $_GET['id'] > 0) {
+            $id = $_GET['id'];
+            $prodetail = getdetail($id);
+          } else {
+            $prodetail = 0;
+          }
+  
+          include 'detail.php';
+          break;
     }
   } else {
     include "./view/home.php";
