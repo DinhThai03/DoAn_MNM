@@ -3,6 +3,8 @@ include "./connect/connect.php";
 include "./connect/sanphamconn.php";
 include "./connect/categoriesconn.php";
 include "./connect/nhasanxuatconn.php";
+include "./connect/signup_process.php";
+include "./connect/user.php";
 $hang = getallnsx();
 $dssp = getallsp();
 
@@ -51,19 +53,44 @@ $dssp = getallsp();
         }
         include "./view/home.php";
         break;
-        case 'detail':
-          if (isset($_GET['id']) && $_GET['id'] > 0) {
-            $id = $_GET['id'];
-            $prodetail = getdetail($id);
-          } else {
-            $prodetail = 0;
-          }
+        case 'login':
+          if ((isset($_POST['login'])) && ($_POST['login'])) {
+            $username = $_POST['username'];
+            $userpass = $_POST['userpass'];
   
-          include 'detail.php';
+            $kq = getuserinfo($username, $userpass);
+            $role = $kq[0]['role'];
+            if ($role == 1) {
+              $_SESSION['role'] = $role;
+              header('location: ./admin/index.php');
+            } else {
+              $_SESSION['role'] = $role;
+              $_SESSION['iduser'] = $kq[0]['id_tk'];
+  
+              $_SESSION['username'] = $kq[0]['username'];
+  
+              header('location: index.php');
+            }
+          }
+          include "./login.php";
           break;
 
           case 'cart':
         include './view/cart.php';
+        break;
+          case 'signup':
+            include './signup.php';
+            break; 
+
+      case 'detail':
+        if (isset($_GET['id']) && $_GET['id'] > 0) {
+          $id = $_GET['id'];
+          $prodetail = getdetail($id);
+        } else {
+          $prodetail = 0;
+        }
+
+        include 'detail.php';
         break;
     }
   } else {
