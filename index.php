@@ -30,6 +30,14 @@ $dssp = getallsp();
   include "./view/header.php";
   if (isset($_GET['page_layout'])) {
     switch ($_GET['page_layout']) {
+      case 'search':
+
+        $keyword = trim($_POST['keyword']); // Loại bỏ khoảng trắng thừa
+        echo "<script>console.log('" . $keyword . "')</script>";
+        $dssp = searchProducts($keyword); // Gọi hàm tìm kiếm
+        include "./view/home.php"; // Hiển thị kết quả
+
+        break;
     }
   } else {
     include "./view/home.php";
