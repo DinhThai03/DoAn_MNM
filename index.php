@@ -1,4 +1,6 @@
 <?php
+session_start();
+if (!isset($_SESSION['giohang'])) $_SESSION['giohang'] = [];
 include "./connect/connect.php";
 include "./connect/sanphamconn.php";
 include "./connect/categoriesconn.php";
@@ -53,34 +55,67 @@ $dssp = getallsp();
         }
         include "./view/home.php";
         break;
-        case 'login':
-          if ((isset($_POST['login'])) && ($_POST['login'])) {
-            $username = $_POST['username'];
-            $userpass = $_POST['userpass'];
-  
-            $kq = getuserinfo($username, $userpass);
-            $role = $kq[0]['role'];
-            if ($role == 1) {
-              $_SESSION['role'] = $role;
-              header('location: ./admin/index.php');
-            } else {
-              $_SESSION['role'] = $role;
-              $_SESSION['iduser'] = $kq[0]['id_tk'];
-  
-              $_SESSION['username'] = $kq[0]['username'];
-  
-              header('location: index.php');
-            }
-          }
-          include "./login.php";
-          break;
+      case 'login':
+        if ((isset($_POST['login'])) && ($_POST['login'])) {
+          $username = $_POST['username'];
+          $userpass = $_POST['userpass'];
 
-          case 'cart':
+          $kq = getuserinfo($username, $userpass);
+          $role = $kq[0]['role'];
+          if ($role == 1) {
+            $_SESSION['role'] = $role;
+            header('location: ./admin/index.php');
+          } else {
+            $_SESSION['role'] = $role;
+            $_SESSION['iduser'] = $kq[0]['id_tk'];
+
+            $_SESSION['username'] = $kq[0]['username'];
+
+            header('location: index.php');
+          }
+        }
+        include "./login.php";
+        break;
+      case 'addcart':
+        if (isset($_POST['addtocart']) && ($_POST['addtocart'])) {
+          $id = $_POST['id'];
+          $tensp = $_POST['tensp'];
+          $anhlaptop = $_POST['anhlaptop'];
+          $price = $_POST['price'];
+          if (isset($_POST['soluonng'])) {
+            $soluong = $_POST['soluong'];
+          } else {
+
+            $soluong = 1;
+          }
+          $fg = 0;
+          //kiem tra san pham da ton tai hay chua neu roi tang so luong
+          $i = 0;
+          foreach ($_SESSION['giohang'] as $item) {
+            if ($item[1] === $tensp) {
+              $slnew = $soluong + $item[4];
+              $_SESSION['giohang'][$i][4] = $slnew;
+              $fg = 1;
+              break;
+            }
+            $i++;
+          }
+          //chua thi them vao gio hang bth
+          if ($fg == 0) {
+            $item = array($id, $tensp, $anhlaptop, $price, $soluong);
+            $_SESSION['giohang'][] = $item;
+          }
+          header('location: index.php?page_layout=cart');
+        }
+
+        //include './view/cart.php';
+        break;
+      case 'cart':
         include './view/cart.php';
         break;
-          case 'signup':
-            include './signup.php';
-            break; 
+      case 'signup':
+        include './signup.php';
+        break;
 
       case 'detail':
         if (isset($_GET['id']) && $_GET['id'] > 0) {
