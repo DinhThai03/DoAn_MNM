@@ -53,7 +53,21 @@
 
                 <h3>Danh mục sản phẩm</h3>
                 <ul>
+                    <?php
 
+                    if (isset($_GET['manhasanxuat']) && $_GET['manhasanxuat'] != '') {
+                        $manhasanxuat = $_GET['manhasanxuat'];
+                        // Gọi hàm lấy danh mục theo NSX
+                        $categories =  getallcate_byID($manhasanxuat);
+                    }
+                    if (!empty($categories)) {
+                        foreach ($categories as $category) {
+                            echo '<li>
+<a href="index.php?page_layout=category&manhasanxuat=' . $category['manhasanxuat'] . '&loai_id=' . $category['id'] . '">' . $category['tenloaisanpham'] . '</a>
+</li>';
+                        }
+                    }
+                    ?>
                 </ul>
             </div>
 

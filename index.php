@@ -1,6 +1,7 @@
 <?php
 include "./connect/connect.php";
 include "./connect/sanphamconn.php";
+$dssp = getallsp();
 
 ?>`
 
@@ -26,6 +27,13 @@ include "./connect/sanphamconn.php";
   include "./view/header.php";
   if (isset($_GET['page_layout'])) {
     switch ($_GET['page_layout']) {
+      case 'category':
+        if (isset($_GET['loai_id']) && $_GET['loai_id'] > 0) {
+          $idcate = $_GET['loai_id'];
+          $dssp = getallsp_byCate($idcate);
+        }
+        include "./view/home.php";
+        break;
     }
   } else {
     include "./view/home.php";
