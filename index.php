@@ -1,6 +1,9 @@
 <?php
 include "./connect/connect.php";
 include "./connect/sanphamconn.php";
+include "./connect/categoriesconn.php";
+include "./connect/nhasanxuatconn.php";
+$hang = getallnsx();
 $dssp = getallsp();
 
 ?>`
@@ -27,12 +30,36 @@ $dssp = getallsp();
   include "./view/header.php";
   if (isset($_GET['page_layout'])) {
     switch ($_GET['page_layout']) {
+      case 'search':
+
+        $keyword = trim($_POST['keyword']); // Loại bỏ khoảng trắng thừa
+        echo "<script>console.log('" . $keyword . "')</script>";
+        $dssp = searchProducts($keyword); // Gọi hàm tìm kiếm
+        include "./view/home.php"; // Hiển thị kết quả
+
+      case 'nsx':
+        if (isset($_GET['manhasanxuat']) && $_GET['manhasanxuat'] > 0) {
+          $idnsx = $_GET['manhasanxuat'];
+          $dssp = getspBynsx($idnsx);
+        }
+        include "./view/home.php";
+        break;
       case 'category':
         if (isset($_GET['loai_id']) && $_GET['loai_id'] > 0) {
           $idcate = $_GET['loai_id'];
           $dssp = getallsp_byCate($idcate);
         }
         include "./view/home.php";
+        break;
+      case 'detail':
+        if (isset($_GET['id']) && $_GET['id'] > 0) {
+          $id = $_GET['id'];
+          $prodetail = getdetail($id);
+        } else {
+          $prodetail = 0;
+        }
+
+        include 'detail.php';
         break;
     }
   } else {
