@@ -37,6 +37,19 @@ $dssp = getallsp();
         $dssp = searchProducts($keyword); // Gọi hàm tìm kiếm
         include "./view/home.php"; // Hiển thị kết quả
 
+      case 'nsx':
+        if (isset($_GET['manhasanxuat']) && $_GET['manhasanxuat'] > 0) {
+          $idnsx = $_GET['manhasanxuat'];
+          $dssp = getspBynsx($idnsx);
+        }
+        include "./view/home.php";
+        break;
+      case 'category':
+        if (isset($_GET['loai_id']) && $_GET['loai_id'] > 0) {
+          $idcate = $_GET['loai_id'];
+          $dssp = getallsp_byCate($idcate);
+        }
+        include "./view/home.php";
         break;
     }
   } else {
