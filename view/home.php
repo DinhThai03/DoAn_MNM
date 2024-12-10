@@ -69,6 +69,8 @@
                     if (!empty($categories)) {
                         foreach ($categories as $category) {
                             echo '<li>
+<a href="index.php?page_layout=category&manhasanxuat=' . $category['manhasanxuat'] . '&loai_id=' . $category['id'] . '">' . $category['tenloaisanpham'] . '</a>
+</li>';
                             <a href="index.php?page_layout=category&manhasanxuat=' . $category['manhasanxuat'] . '&loai_id=' . $category['id'] . '">' . $category['tenloaisanpham'] . '</a>
                             </li>';
                         }

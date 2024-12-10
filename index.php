@@ -32,6 +32,13 @@ $dssp = getallsp();
   include "./view/header.php";
   if (isset($_GET['page_layout'])) {
     switch ($_GET['page_layout']) {
+      case 'search':
+
+        $keyword = trim($_POST['keyword']); // Loại bỏ khoảng trắng thừa
+        echo "<script>console.log('" . $keyword . "')</script>";
+        $dssp = searchProducts($keyword); // Gọi hàm tìm kiếm
+        include "./view/home.php"; // Hiển thị kết quả
+
       case 'nsx':
         if (isset($_GET['manhasanxuat']) && $_GET['manhasanxuat'] > 0) {
           $idnsx = $_GET['manhasanxuat'];
@@ -46,6 +53,7 @@ $dssp = getallsp();
         }
         include "./view/home.php";
         break;
+<<<<<<< HEAD
         case 'login':
           if ((isset($_POST['login'])) && ($_POST['login'])) {
             $username = $_POST['username'];
@@ -71,6 +79,18 @@ $dssp = getallsp();
           case 'signup':
             include './signup.php';
             break; 
+=======
+      case 'detail':
+        if (isset($_GET['id']) && $_GET['id'] > 0) {
+          $id = $_GET['id'];
+          $prodetail = getdetail($id);
+        } else {
+          $prodetail = 0;
+        }
+
+        include 'detail.php';
+        break;
+>>>>>>> 3aba21046bb790d3648026f88168fac3539abecc
     }
   } else {
     include "./view/home.php";
