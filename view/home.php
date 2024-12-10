@@ -4,7 +4,13 @@
             <div class="listmenu">
                 <ul class="list-group list">
                     <h5>Hãng</h5>
-
+                    <?php
+                    foreach ($hang as $nsx) {
+                        echo ' <li class="list-group-item">
+                <a href="index.php?page_layout=nsx&manhasanxuat=' . $nsx['manhasanxuat'] . '">' . $nsx['tennhasanxuat'] . '</a>
+              </li>';
+                    }
+                    ?>
 
                 </ul>
             </div>
@@ -53,7 +59,21 @@
 
                 <h3>Danh mục sản phẩm</h3>
                 <ul>
+                    <?php
 
+                    if (isset($_GET['manhasanxuat']) && $_GET['manhasanxuat'] != '') {
+                        $manhasanxuat = $_GET['manhasanxuat'];
+                        // Gọi hàm lấy danh mục theo NSX
+                        $categories =  getallcate_byID($manhasanxuat);
+                    }
+                    if (!empty($categories)) {
+                        foreach ($categories as $category) {
+                            echo '<li>
+                            <a href="index.php?page_layout=category&manhasanxuat=' . $category['manhasanxuat'] . '&loai_id=' . $category['id'] . '">' . $category['tenloaisanpham'] . '</a>
+                            </li>';
+                        }
+                    }
+                    ?>
                 </ul>
             </div>
 
@@ -62,7 +82,47 @@
                     <div class="container">
                         <div class="row">
 
+                            <?php
+                            foreach ($dssp as $sp) {
+                                echo '<div class="col-6 col-sm-6 col-md-4 col-lg-3 col">
+                                <form action="index.php?page_layout=addcart" method="post">
+                        
+                                
+                                <a style="text-decoration: none;" href="index.php?page_layout=detail&id=' . $sp['id'] . '">
+                                <img src="./image/' . $sp['anhlaptop'] . '" class="img-fluid" alt="">
+                                <h3 class="text-dark" style="font-size: large;margin-top: 10px;">' . $sp['tensp'] . ' </h3>
+                        
+  
+                                 <span>' . $sp['ram'] . '</span>
+                                <span>SSD ' . $sp['dungluong'] . '</span>
+                
+                                    <br>
+                                    <strong class="price text-danger">' . $sp['price'] . '</strong></a>
+                    
+                    <br>
+                    <div class="icon-rating text-danger">
+                      <i class="fa fa-star" aria-hidden="true"></i>
+                      <i class="fa fa-star" aria-hidden="true"></i>
+                      <i class="fa fa-star" aria-hidden="true"></i>
+                      <i class="fa fa-star" aria-hidden="true"></i>
+                      <i class="fa fa-star-half" aria-hidden="true"></i>
+                    </div>
+                    <p>Màn hình' . $sp['manhinh'] . '</p>
+                    <p>CPU: ' . $sp['processor'] . '</p>
+                    <p>Card: ' . $sp['vga'] . '</p>
+                    <div>
+                    
+                    <input type="submit" value="Mua hàng" name="addtocart">
+                    </div>
+                    <input type="hidden" value="' . $sp['id'] . '" name="id">
+                    <input type="hidden" value="' . $sp['tensp'] . '" name="tensp">
+                    <input type="hidden" value="' . $sp['anhlaptop'] . '" name="anhlaptop">
+                    <input type="hidden" value="' . $sp['price'] . '" name="price">
+                    </form>
+                  </div>';
+                            }
 
+                            ?>
 
                         </div>
                     </div>

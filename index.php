@@ -1,5 +1,10 @@
 <?php
 include "./connect/connect.php";
+include "./connect/sanphamconn.php";
+include "./connect/categoriesconn.php";
+include "./connect/nhasanxuatconn.php";
+$hang = getallnsx();
+$dssp = getallsp();
 
 ?>`
 
