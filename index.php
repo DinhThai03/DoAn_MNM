@@ -127,6 +127,24 @@ $dssp = getallsp();
 
         include 'detail.php';
         break;
+
+        case 'delcart':
+          if (isset($_GET['i']) && ($_GET['i'] > 0)) {
+            if (isset($_SESSION['giohang']))
+              array_splice($_SESSION['giohang'], $_GET['i'], 1);
+          } else {
+  
+            if (isset($_SESSION['giohang'])) unset($_SESSION['giohang']);
+          }
+          if (isset($_SESSION['giohang']) && (count($_SESSION['giohang']) > 0)) {
+            header('location: index.php?page_layout=cart');
+            // include './view/cart.php';
+          } else {
+  
+            header('location: index.php');
+          }
+  
+          break;
     }
   } else {
     include "./view/home.php";
