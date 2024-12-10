@@ -25,9 +25,10 @@ include "./connect/connect.php";
   include "./view/header.php";
   if (isset($_GET['page_layout'])) {
     switch ($_GET['page_layout']) {
-     
     }
-  } 
+  } else {
+    include "./view/home.php";
+  }
 
   include "./view/footer.php";
 
