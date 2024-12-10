@@ -61,6 +61,10 @@ $dssp = getallsp();
   
           include 'detail.php';
           break;
+
+          case 'cart':
+        include './view/cart.php';
+        break;
     }
   } else {
     include "./view/home.php";
